@@ -16,7 +16,7 @@ function Replicate (storage, protocol, opts) {
       var feed = storage.get(key)
       feed.on('error', onerror)
       if (err) return onerror(err)
-      feed.replicate(false, Object.assign(opts, { stream: self._protocol }))
+      feed.replicate(self._protocol, opts)
     })
   })
   function onerror () {
@@ -30,6 +30,6 @@ Replicate.prototype.open = function (key, opts) {
   if (!opts) opts = {}
   self._storage.getOrCreateRemote(key, function (err, feed) {
     if (err) return self.emit('error', err)
-    feed.replicate(true, Object.assign({}, opts, { stream: self._protocol }))
+    feed.replicate(self._protocol, opts)
   })
 }
