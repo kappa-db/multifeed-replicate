@@ -11,17 +11,14 @@ function Replicate (storage, protocol, opts) {
   self._storage = storage
   protocol.on('discovery-key', function (dkey) {
     storage.fromDiscoveryKey(dkey, function (err, key) {
-      if (err) return onerror(err)
+      if (err) return self.emit('error', err)
       if (!key) return
-      var feed = storage.get(key)
-      feed.on('error', onerror)
-      if (err) return onerror(err)
-      feed.replicate(self._protocol, opts)
+      storage.get(key, function (err, feed) {
+        if (err) self.emit('error', err)
+        else feed.replicate(self._protocol, opts)
+      })
     })
   })
-  function onerror () {
-    self.emit('error', err)
-  }
 }
 Replicate.prototype = Object.create(EventEmitter.prototype)
 
