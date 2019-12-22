@@ -1,6 +1,6 @@
 {
   "name": "multifeed-replicate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "replicate feeds contained in a multifeed-storage",
   "devDependencies": {
     "hypercore-protocol": "^7.7.1",
